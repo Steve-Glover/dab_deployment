@@ -1,10 +1,38 @@
 [project]
 name = "dab-deployment"
 version = "0.1.0"
-description = "Add your description here"
+description = "Simple project to test deploying ETL pipelines using DABs"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "databricks-connect>=16.1.6",
     "ipykernel>=7.0.1",
 ]
+
+[tool.ruff]
+# Exclude common directories
+exclude = [
+    ".git",
+    ".venv",
+    "__pycache__",
+    ".databricks",
+]
+
+# Set line length to match Databricks style
+line-length = 100
+
+[tool.ruff.lint]
+# Enable pyflakes (F), pycodestyle (E, W), and other useful rules
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "N",   # pep8-naming
+    "UP",  # pyupgrade
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+]
+
+# Ignore specific rules if needed
+ignore = []
