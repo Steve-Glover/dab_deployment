@@ -11,3 +11,4 @@ wheels/
 
 .databricks
 pyrightconfig.json
+ruff_cache/
