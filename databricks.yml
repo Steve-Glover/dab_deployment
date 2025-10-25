@@ -5,12 +5,38 @@
 bundle:
   name: dab_deployment
 
+resources:
+  jobs:
+    test_dab_pipeline:
+      name: test_dab_pipeline_01
+      tasks:
+        - task_key: create_bronze_q1
+          notebook_task:
+            notebook_path: ./src/bronze/query1.py
+            source: WORKSPACE
+        - task_key: create_silver_q1
+          depends_on:
+            - task_key: create_bronze_q1
+          notebook_task:
+            notebook_path: ./src/silver/query1.py
+            source: WORKSPACE
+      queue:
+        enabled: true
+      performance_target: PERFORMANCE_OPTIMIZED
+      parameters:
+        - name: param1
+          default: my_value_1
+        - name: param2
+          default: my_value_2
+
 targets:
   dev:
     mode: development
     default: true
     workspace:
       host: https://dbc-39d9ee99-6bcf.cloud.databricks.com
+      profile: DBFREE2
+      root_path: /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}
 
   ## Optionally, there could be 'staging' or 'prod' targets here.
   #
